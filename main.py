@@ -1,5 +1,5 @@
 from tkinter import *
-from Data import Record
+from Data import record
 import tkinter as tk
 
 
@@ -9,7 +9,7 @@ def main():
 
     Label(m, text='Raw data CSV').grid(row=0, column=0)
     e1 = Entry(m).grid(row=0, column=1)
-    get_data_button = tk.Button(m, text='Import raw data', command=Record.import_raw_data(e1))
+    get_data_button = tk.Button(m, text='Import raw data', command=record.import_raw_data(e1))
     get_data_button.pack()
     Teamlistbox = Listbox(m)
 

@@ -1,71 +1,3 @@
-import csv
-
-
-class MasterData:
-    matchrecordlist = list() #Class variable
-    pitlist = list() #Class variable
-
-    @staticmethod
-    def import_raw_match_data(filelocation):
-        with open(filelocation, newline='') as csvfile:
-            scoutingreader = csv.DictReader(csvfile, delimiter=',', quotechar='|')
-            for row in scoutingreader:
-                MasterData.matchrecordlist.append(Record(row))
-
-    @staticmethod
-    def import_raw_pit_data(filelocation):
-        PitData.import_raw_pit_data(filelocation)
-
-    @staticmethod
-    def clear_data():
-        MasterData.matchrecordlist.clear()
-
-    @staticmethod
-    def get_matches_by_team(teamnum):
-        temp = list()
-        for r in MasterData.matchrecordlist:
-            if r.team == teamnum:
-                temp.append(r)
-        return temp
-
-class Team:
-    def __init__(self, teamnum):
-        self.number = int(teamnum)
-        self.update_matches()
-
-    def update_data(self):
-        self.matchlist = MasterData.get_matches_by_team(self.number)
-
-class PitData:
-
-    @staticmethod
-    def import_raw_pit_data(filelocation):
-        with open(filelocation, newline='') as csvfile:
-            MasterData.pitlist.clear()
-            scoutingreader = csv.DictReader(csvfile, delimiter=',', quotechar='|')
-            for row in scoutingreader:
-                MasterData.pitlist.append(PitData(row))
-
-    def __init__(self, data):
-        self.data = data
-        self.from_dict()
-
-    def from_dict(self):
-        self.teamnum = self.data.get('Team')
-        self.drivetrain = self.data.get('Drive Train')
-        self.wheeltype = self.data.get('Wheel')
-        self.drivetrain_motors = self.data.get('Drive Train Motors')
-        self.programming_language = self.data.get('Programming Language')
-        self.weight = self.data.get('Weight')
-        self.hatch_scoring = self.data.get('Hatch Scoring Location')
-        self.hatch_floor_pickup = self.data.get('Hatch Floor Pick Up')
-        self.climbing = self.data.get('Climbing')
-        self.sandstorm_positions = self.data.get('Sandstorm Positions')
-        self.sandstorm_positions = self.data.get('Sandstorm Abilities')
-        self.unreliable_source = self.data.get('Unreliable Source')
-        self.comments = self.data.get('Comments')
-
-
 class Record:
     def __init__(self, data):
         self.data = data
@@ -73,6 +5,8 @@ class Record:
 
     def from_dict(self):
         self.scout = self.data.get('Scout')
+        self.match = int(self.data.get('Match'))
+        
         self.replay = self.data.get('Replay?')
         self.team = int(self.data.get('Team'))
         self.alliance = self.data.get('Alliance')
